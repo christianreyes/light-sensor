@@ -3,10 +3,14 @@
  * Module dependencies.
  */
 
+var SerialPort = require("serialport").SerialPort
+var serialPort = new SerialPort("/dev/tty.usbserial-A100OSY8");
+
 var express = require('express')
   , routes = require('./routes')
 
 var app = module.exports = express.createServer();
+var io    = require('socket.io').listen(app);
 
 // Configuration
 
@@ -28,6 +32,8 @@ app.configure('production', function(){
 });
 
 // Routes
+
+var level = 0;
 
 app.get('/', routes.index);
 
