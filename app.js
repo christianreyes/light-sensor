@@ -33,9 +33,22 @@ app.configure('production', function(){
 
 // Routes
 
-var level = 0;
+
 
 app.get('/', routes.index);
 
 app.listen(3000);
+
+var level = 0;
+
+serialPort.on("data", function (data) {
+  level = parseInt(data);
+});
+
+io.sockets.on('connection', function (socket) {
+  socket.on("get-level", function () {
+    socket.emit("current-level", { level: level });
+  });
+});
+
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
