@@ -11,10 +11,11 @@ $(function(){
   
   setInterval(function(){
     socket.emit("get-level", null);
-  }, 500);
+  }, 100);
   
   socket.on("current-level", function(data){
     $('.level').text(data.level);
+    $('.bar').css("width", data.level * 100);
   });
   
 });
